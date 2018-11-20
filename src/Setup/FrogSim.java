@@ -4,40 +4,42 @@ public class FrogSim {
     private int goalDistance;
     private int maxHops;
     private int moved;
-    private int hopDist;
+    public int reachValue = 0;
+
+    public static int hopDist;
     public FrogSim(int dist,int numHops) {
         goalDistance = dist;
         maxHops = numHops;
     }
-    private void hopDistance(int hop) {
+    public static void hopDistance(int hop) {
         hopDist = hop;
 
     }
-    public boolean simulate() {
+    public void simulate() {
         for (int i = maxHops; i >0; i--) {
            moved += hopDist;
         }
         if (moved >= goalDistance) {
-            return true;
+            reachValue = 1;
         }
         else {
-            return false;
+            reachValue = 0;
         }
     }
 
     public double runSimulations(int num){
-        int winnum = 0;
-        int failnum = 0;
+        double winnum = 0;
+        double failnum = 0;
         for (int i = num; i > 0; i--) {
-            if (simulate()) {
+            simulate();
+            if (reachValue == 1) {
                 winnum++;
             }
             else {
                 failnum += .1;
             }
         }
-        int displayed = winnum + failnum;
-        return displayed;
+        return winnum + failnum;
 
     }
 }
